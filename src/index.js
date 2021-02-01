@@ -164,11 +164,33 @@ const countCategoryRecords = (newState) => {
     totalCategoryParagraph.innerHTML = `Total records after filter ${newState.length}`;
   } else totalCategoryParagraph.innerHTML = "";
 };
+
+const csvExport = () => {
+  const rows = document.querySelectorAll(".table__item");
+  const rowsdata = Array.from(rows).map((row) => {
+    return [
+      row.children[0].innerHTML,
+      row.children[1].innerHTML,
+      row.children[2].innerHTML,
+    ];
+  });
+  let csvContent =
+    "data:text/csv;charset=utf-8," +
+    rowsdata.map((e) => e.join(",")).join("\n");
+  var encodedUri = encodeURI(csvContent);
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "books.csv");
+  document.body.appendChild(link);
+
+  link.click();
+};
+
 initialAddNewCategories();
 filterBooks();
+
 form.addEventListener("submit", addBook);
 filterInputs.forEach((input) => input.addEventListener("change", filterBooks));
 modal.addEventListener("click", (e) =>
   e.target.dataset.layer ? modal.classList.remove("open") : null
 );
-window.print();
