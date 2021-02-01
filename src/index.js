@@ -37,7 +37,7 @@ const deleteBook = (item) => {
     (book) => book.id !== parseInt(item.dataset.id)
   );
   state = newState;
-  renderBooks(state);
+  filterBooks(modyfiedState);
 };
 
 const openModal = (e) => {
