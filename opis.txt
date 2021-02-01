@@ -1,5 +1,4 @@
 licznik książek z danej kategorii
-możliwość filtrowania po kategorii, autorze, priorytecie
 
 możliwość dodania nowej kategorii
 drag&drop książki

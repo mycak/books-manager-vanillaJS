@@ -108,7 +108,9 @@ const countTotalRecords = (state) => {
   totalParagraph.innerHTML = `Total records ${state.length}`;
 };
 const countCategoryRecords = (newState) => {
-  totalCategoryParagraph.innerHTML = `Total records after filter ${newState.length}`;
+  if (newState.length !== state.length) {
+    totalCategoryParagraph.innerHTML = `Total records after filter ${newState.length}`;
+  } else totalCategoryParagraph.innerHTML = "";
 };
 
 renderBooks(state);
