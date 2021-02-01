@@ -1,0 +1,77 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html,
+button {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+}
+h1 {
+  margin: 1em;
+}
+.section {
+  text-align: center;
+  align-items: center;
+}
+.form {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 2em;
+}
+.form__modal {
+  margin: auto;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2em;
+}
+
+.table {
+  width: 80%;
+  margin: 2em auto 2em auto;
+}
+.table__headers {
+  font-weight: 700;
+  margin: 1em;
+}
+.table__headers,
+.table__item {
+  display: flex;
+}
+.table__headers *,
+.table__item * {
+  flex-basis: 100%;
+}
+
+.modal {
+  visibility: hidden;
+  background-color: hsl(0, 0%, 83%, 0.5);
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.modal__container {
+  padding: 2em;
+  background-color: gainsboro;
+  position: relative;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.open {
+  visibility: visible;
+}
+.total {
+  margin: 3em;
+}
