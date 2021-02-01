@@ -50,10 +50,11 @@ const editBook = (e) => {
   state[indexInState].priority = document.getElementById(
     "modal-priority"
   ).value;
-  renderBooks(state);
+  filterBooks();
 };
 
 const sortBooks = (kind) => {
+  console.log(modyfiedState)
   if (kind === "prior") {
     if (flag) {
       modyfiedState.sort((a, b) => a.priority - b.priority);
@@ -100,7 +101,6 @@ const renderBooks = (stateTorender) => {
   `
     )
     .join("");
-  modyfiedState = [...state];
   countTotalRecords(state);
 };
 
@@ -113,7 +113,7 @@ const countCategoryRecords = (newState) => {
   } else totalCategoryParagraph.innerHTML = "";
 };
 
-renderBooks(state);
+filterBooks();
 form.addEventListener("submit", addBook);
 filterInputs.forEach((input) => input.addEventListener("change", filterBooks));
 modal.addEventListener("click", (e) =>
