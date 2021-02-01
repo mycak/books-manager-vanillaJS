@@ -17,7 +17,7 @@
       <form class="form">
         <div>
           <label for="title">Title</label>
-          <input type="text" name="title" id="title"/>
+          <input type="text" name="title" id="title" class="form__title" placeholder="Pass the title !"/>
         </div>
         <div>
           <label for="category">Category</label>
@@ -32,11 +32,11 @@
         <div>
           <label for="priority">Priority</label>
           <select name="priority" id="priority">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
           </select>
         </div>
         <button type="submit" class="button__add">Add Book</button>
@@ -55,12 +55,12 @@
         </select>
         <label for="priority">Priority</label>
         <select name="priority" id="filter-priority" data-kind="priority" class="filter__input">
-          <option value="0">All</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
+          <option value=0>All</option>
+          <option value=1>1</option>
+          <option value=2>2</option>
+          <option value=3>3</option>
+          <option value=4>4</option>
+          <option value=5>5</option>
         </select>
       </div>
 
@@ -100,11 +100,11 @@
             <div>
               <label for="priority">Priority</label>
               <select name="priority" id="modal-priority">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
               </select>
             </div>
             <button type="submit" data-currentId="" class="button__edit" onClick="editBook(this)">Save</button>

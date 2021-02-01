@@ -25,6 +25,13 @@ h1 {
   justify-content: center;
   gap: 2em;
 }
+.form__title::placeholder {
+  visibility: hidden;
+}
+.form__title.disabled::placeholder{
+  visibility: visible;
+  color: red;
+}
 .form__modal {
   margin: auto;
   width: 40%;

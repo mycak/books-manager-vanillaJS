@@ -1,7 +1,9 @@
 let state = JSON.parse(localStorage.getItem("state")) || [];
+console.log(state);
 let modyfiedState = [];
 let flag = true;
 const form = document.querySelector("form");
+const formTitleInput = document.querySelector(".form__title");
 const table = document.querySelector(".table__data");
 const modal = document.querySelector(".modal");
 const totalParagraph = document.querySelector(".total");
@@ -14,14 +16,20 @@ const addBook = (e) => {
   const newBook = {
     title: document.getElementById("title").value,
     category: document.getElementById("category").value,
-    priority: parseInt(document.getElementById("priority").value),
+    priority: document.getElementById("priority").value,
     id: newId,
   };
-  state.push(newBook);
-  filterBooks(modyfiedState);
-  document.getElementById("title").value = '';
-  document.getElementById("category").value = '';
-  document.getElementById("priority").value = '';
+  console.log(newBook);
+  if (newBook.title === "") {
+    formTitleInput.classList.add("disabled");
+  } else {
+    state.push(newBook);
+    filterBooks(modyfiedState);
+    formTitleInput.classList.remove("disabled");
+    document.getElementById("title").value = "";
+    document.getElementById("category").value = "criminal";
+    document.getElementById("priority").value = 1;
+  }
 };
 
 const deleteBook = (item) => {
@@ -72,10 +80,14 @@ const sortBooks = (kind) => {
   }
   if (kind === "title") {
     if (flag) {
-      modyfiedState.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
+      modyfiedState.sort((a, b) =>
+        a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
+      );
     } else
       modyfiedState
-        .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1))
+        .sort((a, b) =>
+          a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
+        )
         .reverse();
   }
   flag = !flag;
@@ -86,8 +98,8 @@ const filterBooks = (e) => {
   modyfiedState = [...state];
   filterInputs.forEach((input) => {
     const kind = input.dataset.kind;
-    const value = kind === "priority" ? parseInt(input.value) : input.value;
-      if (value !== 0 && value !== '0') {
+    const value = input.value;
+    if (value !== 0 && value !== "0") {
       modyfiedState = modyfiedState.filter((item) => item[kind] === value);
     }
   });
