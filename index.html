@@ -42,22 +42,11 @@
         <button type="submit" class="button__add">Add Book</button>
       </form>
 
-      <div class="table">
-        <div class="table__headers">
-          <p>Title</p>
-          <button type="button" onclick="sortBooks('cat')">Category</button>
-          <button type="button" onclick="sortBooks('prior')">Priority</button>
-          <p>Remove</p>
-          <p>Edit</p>
-        </div>
-        <div class="table__data"></div>
-      </div>
-
       <div class="filter">
         <p>Filters</p>
         <label for="category">Category</label>
         <select name="category" id="filter-category" data-kind="category" class="filter__input">
-          <option value="all">All</option>
+          <option value="0">All</option>
           <option value="criminal">Criminal</option>
           <option value="scifi">Sci-fi</option>
           <option value="fantasy">Fantasy</option>
@@ -74,6 +63,19 @@
           <option value="5">5</option>
         </select>
       </div>
+
+      <div class="table">
+        <div class="table__headers">
+          <button type="button" onclick="sortBooks('title')">Title</button>
+          <button type="button" onclick="sortBooks('cat')">Category</button>
+          <button type="button" onclick="sortBooks('prior')">Priority</button>
+          <p>Remove</p>
+          <p>Edit</p>
+        </div>
+        <div class="table__data"></div>
+      </div>
+
+      
 
       <div class="total"></div>
       <div class="total__category"></div>
@@ -105,7 +107,7 @@
                 <option value="5">5</option>
               </select>
             </div>
-            <button type="submit" data-currentId="" class="button__edit" onClick="editBook(this)">Edit Book</button>
+            <button type="submit" data-currentId="" class="button__edit" onClick="editBook(this)">Save</button>
           </form>
         </div>
       </div>

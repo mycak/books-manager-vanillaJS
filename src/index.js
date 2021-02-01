@@ -18,7 +18,10 @@ const addBook = (e) => {
     id: newId,
   };
   state.push(newBook);
-  renderBooks(state);
+  filterBooks(modyfiedState);
+  document.getElementById("title").value = '';
+  document.getElementById("category").value = '';
+  document.getElementById("priority").value = '';
 };
 
 const deleteBook = (item) => {
@@ -50,11 +53,10 @@ const editBook = (e) => {
   state[indexInState].priority = document.getElementById(
     "modal-priority"
   ).value;
-  filterBooks();
+  filterBooks(modyfiedState);
 };
 
 const sortBooks = (kind) => {
-  console.log(modyfiedState)
   if (kind === "prior") {
     if (flag) {
       modyfiedState.sort((a, b) => a.priority - b.priority);
@@ -68,6 +70,14 @@ const sortBooks = (kind) => {
         .sort((a, b) => (a.category > b.category ? 1 : -1))
         .reverse();
   }
+  if (kind === "title") {
+    if (flag) {
+      modyfiedState.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1));
+    } else
+      modyfiedState
+        .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1))
+        .reverse();
+  }
   flag = !flag;
   renderBooks(modyfiedState);
 };
@@ -77,7 +87,7 @@ const filterBooks = (e) => {
   filterInputs.forEach((input) => {
     const kind = input.dataset.kind;
     const value = kind === "priority" ? parseInt(input.value) : input.value;
-    if (value !== "all" && value !== 0) {
+      if (value !== 0 && value !== '0') {
       modyfiedState = modyfiedState.filter((item) => item[kind] === value);
     }
   });
@@ -85,10 +95,10 @@ const filterBooks = (e) => {
   renderBooks(modyfiedState);
 };
 
-const renderBooks = (stateTorender) => {
+const renderBooks = (stateToRender) => {
   localStorage.setItem("state", JSON.stringify(state));
   table.innerHTML = ``;
-  table.innerHTML = stateTorender
+  table.innerHTML = stateToRender
     .map(
       (book) => `
       <div class="table__item" data-id=${book.id}>
