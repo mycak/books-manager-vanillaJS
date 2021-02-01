@@ -21,7 +21,7 @@
         </div>
         <div>
           <label for="category">Category</label>
-          <select name="category" id="category">
+          <select name="category" id="category" class="select__category">
             <option value="criminal">Criminal</option>
             <option value="scifi">Sci-fi</option>
             <option value="fantasy">Fantasy</option>
@@ -45,7 +45,7 @@
       <div class="filter">
         <p>Filters</p>
         <label for="category">Category</label>
-        <select name="category" id="filter-category" data-kind="category" class="filter__input">
+        <select name="category" id="filter-category" data-kind="category" class="select__category filter__input">
           <option value="0">All</option>
           <option value="criminal">Criminal</option>
           <option value="scifi">Sci-fi</option>
@@ -64,13 +64,19 @@
         </select>
       </div>
 
+      <form class="modul__add__category" onSubmit="addCategory(event)">
+        <label for="newCategory">Add category</label>
+        <input type="text" name="newCategory" class="input__new__category" placeholder="Pass the category !"/>
+        <button type="submit" class="button__add__category">Add</button>
+      </form>
+
       <div class="table">
         <div class="table__headers">
           <button type="button" onclick="sortBooks('title')">Title</button>
           <button type="button" onclick="sortBooks('cat')">Category</button>
           <button type="button" onclick="sortBooks('prior')">Priority</button>
-          <p>Remove</p>
-          <p>Edit</p>
+          <p></p>
+          <p></p>
         </div>
         <div class="table__data"></div>
       </div>
@@ -89,7 +95,7 @@
             </div>
             <div>
               <label for="category">Category</label>
-              <select name="category" id="modal-category">
+              <select name="category" id="modal-category" class="select__category">
                 <option value="criminal">Criminal</option>
                 <option value="scifi">Sci-fi</option>
                 <option value="fantasy">Fantasy</option>

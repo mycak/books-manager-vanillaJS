@@ -1,5 +1,5 @@
 let state = JSON.parse(localStorage.getItem("state")) || [];
-console.log(state);
+let addedCategories = JSON.parse(localStorage.getItem("categories")) || [];
 let modyfiedState = [];
 let flag = true;
 const form = document.querySelector("form");
@@ -19,7 +19,6 @@ const addBook = (e) => {
     priority: document.getElementById("priority").value,
     id: newId,
   };
-  console.log(newBook);
   if (newBook.title === "") {
     formTitleInput.classList.add("disabled");
   } else {
@@ -126,6 +125,37 @@ const renderBooks = (stateToRender) => {
   countTotalRecords(state);
 };
 
+const addCategory = (e) => {
+  e.preventDefault();
+  const name = document.querySelector(".input__new__category");
+  if (name.value !== "") {
+    const selects = document.querySelectorAll(".select__category");
+    selects.forEach((select) => {
+      const newOption = document.createElement("option");
+      newOption.value = name.value.toLowerCase();
+      newOption.innerHTML = name.value;
+      select.appendChild(newOption);
+    });
+    name.classList.remove("disabled");
+    addedCategories.push(name.value);
+    localStorage.setItem("categories", JSON.stringify(addedCategories));
+  } else name.classList.add("disabled");
+  name.value = "";
+  console.log(addedCategories);
+};
+
+const initialAddNewCategories = () => {
+  const selects = document.querySelectorAll(".select__category");
+  selects.forEach((select) => {
+    addedCategories.forEach((cat) => {
+      const newOption = document.createElement("option");
+      newOption.value = cat.toLowerCase();
+      newOption.innerHTML = cat;
+      select.appendChild(newOption);
+    });
+  });
+};
+
 const countTotalRecords = (state) => {
   totalParagraph.innerHTML = `Total records ${state.length}`;
 };
@@ -134,10 +164,11 @@ const countCategoryRecords = (newState) => {
     totalCategoryParagraph.innerHTML = `Total records after filter ${newState.length}`;
   } else totalCategoryParagraph.innerHTML = "";
 };
-
+initialAddNewCategories();
 filterBooks();
 form.addEventListener("submit", addBook);
 filterInputs.forEach((input) => input.addEventListener("change", filterBooks));
 modal.addEventListener("click", (e) =>
   e.target.dataset.layer ? modal.classList.remove("open") : null
 );
+window.print();
