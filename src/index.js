@@ -112,7 +112,13 @@ const renderBooks = (stateToRender) => {
   table.innerHTML = stateToRender
     .map(
       (book) => `
-      <div class="table__item" data-id=${book.id}>
+      <div
+        class="table__item draggable"
+        draggable="true"
+        ondragstart="onDragStart(event);"
+        ondrop="onDrop(event);"
+        data-id=${book.id}
+      >
         <p>${book.title}</p>
         <p>${book.category}</p>
         <p>${book.priority}</p>
@@ -184,6 +190,35 @@ const csvExport = () => {
   document.body.appendChild(link);
 
   link.click();
+};
+
+// DRAG AND DROP
+
+const onDragStart = (event) => {
+  event.dataTransfer.setData("text/plain", event.target.dataset.id);
+};
+const onDragOver = (event) => {
+  event.preventDefault();
+};
+const onDrop = (event) => {
+  const idDraggedElement = parseInt(event.dataTransfer.getData("text"));
+  const idTarget = parseInt(event.currentTarget.dataset.id);
+  const indexOfDragged = modyfiedState
+    .map((item) => item.id)
+    .indexOf(idDraggedElement);
+  const indexOfTarget = modyfiedState.map((item) => item.id).indexOf(idTarget);
+  const draggedItem = modyfiedState[indexOfDragged];
+
+  if (indexOfTarget < indexOfDragged) {
+    modyfiedState.splice(indexOfTarget, 0, draggedItem);
+    modyfiedState.splice(indexOfDragged + 1, 1);
+  } else {
+    modyfiedState.splice(indexOfTarget + 1, 0, draggedItem);
+    modyfiedState.splice(indexOfDragged, 1);
+  }
+
+  event.dataTransfer.clearData();
+  renderBooks(modyfiedState);
 };
 
 initialAddNewCategories();

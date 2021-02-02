@@ -1,2 +1,0 @@
-drag&drop książki
-opcja drukowania listy lub exportu do pdf/csv/xmlJeżeli

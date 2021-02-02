@@ -19,6 +19,8 @@ h1 {
   text-align: center;
   align-items: center;
 }
+
+/* MAIN FORM MAIN FORM MAIN FORM MAIN FORM MAIN FORM MAIN FORM MAIN FORM MAIN FORM  */
 .form {
   display: flex;
   flex-grow: 1;
@@ -34,15 +36,8 @@ h1 {
   visibility: visible;
   color: red;
 }
-.form__modal {
-  margin: auto;
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  gap: 2em;
-}
 
+/* TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE  */
 .table {
   width: 80%;
   margin: 2em auto 2em auto;
@@ -59,16 +54,12 @@ h1 {
 .table__item * {
   flex-basis: 100%;
 }
-
-.modal {
-  visibility: hidden;
-  background-color: hsl(0, 0%, 83%, 0.5);
-  position: absolute;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
+.table__data {
+  display: flex;
+  flex-direction: column;
 }
 
+/* MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW  */
 .modal__container {
   padding: 2em;
   background-color: gainsboro;
@@ -78,13 +69,30 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.form__modal {
+  margin: auto;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2em;
+}
+.modal {
+  visibility: hidden;
+  background-color: hsl(0, 0%, 83%, 0.5);
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS  */
 .open {
   visibility: visible;
 }
 .total {
   margin: 3em;
 }
-
 .filter {
   margin-top: 3em;
 }
