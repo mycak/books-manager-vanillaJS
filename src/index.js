@@ -2,32 +2,55 @@ let state = JSON.parse(localStorage.getItem("state")) || [];
 let addedCategories = JSON.parse(localStorage.getItem("categories")) || [];
 let modyfiedState = [];
 let flag = true;
+
+//Modals selector
+const modal = document.querySelector(".modal");
+const modalTitleInput = document.getElementById("modal-title");
+const modalCategoryInput = document.getElementById("modal-category");
+const modalPriorityInput = document.getElementById("modal-priority");
+const modalAuthorInput = document.getElementById("modal-author");
+const modalEditButton = document.querySelector(".button__edit");
+
 const form = document.querySelector("form");
 const formTitleInput = document.querySelector(".form__title");
+const formCategoryInput = document.getElementById("category");
+const formPriorityInput = document.getElementById("priority");
+const formAuthorInput = document.getElementById("author");
+
+const filterInputs = document.querySelectorAll(".filter__input");
+
+const inputNewCategory = document.querySelector(".input__new__category");
+const selectsCategory = document.querySelectorAll(".select__category");
+
 const table = document.querySelector(".table__data");
-const modal = document.querySelector(".modal");
+
 const totalParagraph = document.querySelector(".total");
 const totalCategoryParagraph = document.querySelector(".total__category");
-const filterInputs = document.querySelectorAll(".filter__input");
+
+// MANAGING STATE
 
 const addBook = (e) => {
   const newId = state.length ? state[state.length - 1].id + 1 : 0;
   e.preventDefault();
   const newBook = {
-    title: document.getElementById("title").value,
-    category: document.getElementById("category").value,
-    priority: document.getElementById("priority").value,
+    title: formTitleInput.value,
+    category: formCategoryInput.value,
+    priority: formPriorityInput.value,
+    author: formAuthorInput.value,
     id: newId,
   };
-  if (newBook.title === "") {
-    formTitleInput.classList.add("disabled");
+  if (newBook.title === "" || newBook.author === "") {
+    newBook.title === "" ? formTitleInput.classList.add("disabled") : null;
+    newBook.author === "" ? formAuthorInput.classList.add("disabled") : null;
   } else {
     state.push(newBook);
     filterBooks(modyfiedState);
     formTitleInput.classList.remove("disabled");
-    document.getElementById("title").value = "";
-    document.getElementById("category").value = "criminal";
-    document.getElementById("priority").value = 1;
+    formAuthorInput.classList.remove("disabled");
+    formTitleInput.value = "";
+    formAuthorInput.value = "";
+    formCategoryInput.value = "criminal";
+    formPriorityInput.value = 1;
   }
 };
 
@@ -44,50 +67,44 @@ const openModal = (e) => {
     (item) => item.id === parseInt(e.dataset.id)
   )[0];
   modal.classList.add("open");
-  document.getElementById("modal-title").value = itemData.title;
-  document.getElementById("modal-category").value = itemData.category;
-  document.getElementById("modal-priority").value = itemData.priority;
-  document.querySelector(".button__edit").dataset.currentId = itemData.id;
+  modalTitleInput.value = itemData.title;
+  modalCategoryInput.value = itemData.category;
+  modalPriorityInput.value = itemData.priority;
+  modalAuthorInput.value = itemData.author;
+  modalEditButton.dataset.currentId = itemData.id;
 };
 
 const editBook = (e) => {
   const currentId = parseInt(e.dataset.currentId);
   const indexInState = state.map((item) => item.id).indexOf(currentId);
-  state[indexInState].title = document.getElementById("modal-title").value;
-  state[indexInState].category = document.getElementById(
-    "modal-category"
-  ).value;
-  state[indexInState].priority = document.getElementById(
-    "modal-priority"
-  ).value;
-  filterBooks(modyfiedState);
+  if (modalTitleInput.value === "" || modalAuthorInput.value === "") {
+    modalTitleInput.value === ""
+      ? modalTitleInput.classList.add("disabled")
+      : null;
+    modalAuthorInput.value === ""
+      ? modalAuthorInput.classList.add("disabled")
+      : null;
+  } else {
+    state[indexInState].title = modalTitleInput.value;
+    state[indexInState].category = modalCategoryInput.value;
+    state[indexInState].priority = modalPriorityInput.value;
+    state[indexInState].author = modalAuthorInput.value;
+    filterBooks(modyfiedState);
+    modal.classList.remove("open");
+  }
 };
 
 const sortBooks = (kind) => {
-  if (kind === "prior") {
+  const helper = (a, b) =>
+    a[kind].toLowerCase() > b[kind].toLowerCase() ? 1 : -1;
+  if (kind === "priority") {
     if (flag) {
       modyfiedState.sort((a, b) => a.priority - b.priority);
     } else modyfiedState.sort((a, b) => a.priority - b.priority).reverse();
-  }
-  if (kind === "cat") {
+  } else {
     if (flag) {
-      modyfiedState.sort((a, b) => (a.category > b.category ? 1 : -1));
-    } else
-      modyfiedState
-        .sort((a, b) => (a.category > b.category ? 1 : -1))
-        .reverse();
-  }
-  if (kind === "title") {
-    if (flag) {
-      modyfiedState.sort((a, b) =>
-        a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-      );
-    } else
-      modyfiedState
-        .sort((a, b) =>
-          a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-        )
-        .reverse();
+      modyfiedState.sort((a, b) => helper(a, b));
+    } else modyfiedState.sort((a, b) => helper(a, b)).reverse();
   }
   flag = !flag;
   renderBooks(modyfiedState);
@@ -106,6 +123,7 @@ const filterBooks = (e) => {
   renderBooks(modyfiedState);
 };
 
+// RENDER
 const renderBooks = (stateToRender) => {
   localStorage.setItem("state", JSON.stringify(state));
   table.innerHTML = ``;
@@ -120,6 +138,7 @@ const renderBooks = (stateToRender) => {
         data-id=${book.id}
       >
         <p>${book.title}</p>
+        <p>${book.author}</p>
         <p>${book.category}</p>
         <p>${book.priority}</p>
         <button type="button" data-id=${book.id} onClick="deleteBook(this)"}>Delete</button>
@@ -131,28 +150,26 @@ const renderBooks = (stateToRender) => {
   countTotalRecords(state);
 };
 
+// ADDING CATEGORY
+
 const addCategory = (e) => {
   e.preventDefault();
-  const name = document.querySelector(".input__new__category");
-  if (name.value !== "") {
-    const selects = document.querySelectorAll(".select__category");
-    selects.forEach((select) => {
+  if (inputNewCategory.value !== "") {
+    selectsCategory.forEach((select) => {
       const newOption = document.createElement("option");
-      newOption.value = name.value.toLowerCase();
-      newOption.innerHTML = name.value;
+      newOption.value = inputNewCategory.value.toLowerCase();
+      newOption.innerHTML = inputNewCategory.value;
       select.appendChild(newOption);
     });
-    name.classList.remove("disabled");
-    addedCategories.push(name.value);
+    inputNewCategory.classList.remove("disabled");
+    addedCategories.push(inputNewCategory.value);
     localStorage.setItem("categories", JSON.stringify(addedCategories));
-  } else name.classList.add("disabled");
-  name.value = "";
-  console.log(addedCategories);
+  } else inputNewCategory.classList.add("disabled");
+  inputNewCategory.value = "";
 };
 
 const initialAddNewCategories = () => {
-  const selects = document.querySelectorAll(".select__category");
-  selects.forEach((select) => {
+  selectsCategory.forEach((select) => {
     addedCategories.forEach((cat) => {
       const newOption = document.createElement("option");
       newOption.value = cat.toLowerCase();
@@ -162,6 +179,8 @@ const initialAddNewCategories = () => {
   });
 };
 
+//COUNTING RECORDS
+
 const countTotalRecords = (state) => {
   totalParagraph.innerHTML = `Total records ${state.length}`;
 };
@@ -170,6 +189,8 @@ const countCategoryRecords = (newState) => {
     totalCategoryParagraph.innerHTML = `Total records after filter ${newState.length}`;
   } else totalCategoryParagraph.innerHTML = "";
 };
+
+//CSV EXPORT
 
 const csvExport = () => {
   const rows = document.querySelectorAll(".table__item");
@@ -221,11 +242,19 @@ const onDrop = (event) => {
   renderBooks(modyfiedState);
 };
 
+// INITIAL
+
 initialAddNewCategories();
 filterBooks();
 
+// EVENT LISTENERS
+
 form.addEventListener("submit", addBook);
 filterInputs.forEach((input) => input.addEventListener("change", filterBooks));
-modal.addEventListener("click", (e) =>
-  e.target.dataset.layer ? modal.classList.remove("open") : null
-);
+modal.addEventListener("click", (e) => {
+  if (e.target.dataset.layer) {
+    modalTitleInput.classList.remove("disabled");
+    modalAuthorInput.classList.remove("disabled");
+    modal.classList.remove("open");
+  }
+});

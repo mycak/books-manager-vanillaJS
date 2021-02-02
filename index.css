@@ -27,10 +27,12 @@ h1 {
   justify-content: center;
   gap: 2em;
 }
+.form__author::placeholder,
 .form__title::placeholder,
 .input__new__category::placeholder {
   visibility: hidden;
 }
+.form__author.disabled::placeholder,
 .form__title.disabled::placeholder,
 .input__new__category.disabled::placeholder {
   visibility: visible;

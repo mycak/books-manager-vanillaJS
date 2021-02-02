@@ -20,6 +20,10 @@
           <input type="text" name="title" id="title" class="form__title" placeholder="Pass the title !"/>
         </div>
         <div>
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author" class="form__author" placeholder="Pass the author !"/>
+        </div>
+        <div>
           <label for="category">Category</label>
           <select name="category" id="category" class="select__category">
             <option value="criminal">Criminal</option>
@@ -73,8 +77,9 @@
       <div class="table">
         <div class="table__headers">
           <button type="button" onclick="sortBooks('title')">Title</button>
-          <button type="button" onclick="sortBooks('cat')">Category</button>
-          <button type="button" onclick="sortBooks('prior')">Priority</button>
+          <button type="button" onclick="sortBooks('author')">Author</button>
+          <button type="button" onclick="sortBooks('category')">Category</button>
+          <button type="button" onclick="sortBooks('priority')">Priority</button>
           <p></p>
           <p></p>
         </div>
@@ -89,7 +94,11 @@
           <form class="form__modal">
             <div>
               <label for="title">Title</label>
-              <input type="text" name="title" id="modal-title"/>
+              <input type="text" name="title" id="modal-title" class="form__title" placeholder="Pass the title !"/>
+            </div>
+            <div>
+              <label for="author">Author</label>
+              <input type="text" name="author" id="modal-author" class="form__author" placeholder="Pass the author !"/>
             </div>
             <div>
               <label for="category">Category</label>
@@ -111,7 +120,7 @@
                 <option value=5>5</option>
               </select>
             </div>
-            <button type="submit" data-currentId="" class="button__edit" onClick="editBook(this)">Save</button>
+            <button type="button" data-currentId="" class="button__edit" onClick="editBook(this)">Save</button>
           </form>
         </div>
       </div>
