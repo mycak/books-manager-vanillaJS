@@ -34,11 +34,11 @@ const addBook = (e) => {
     state.push(newBook);
     filterBooks(modyfiedState);
     [formInputs[0], formInputs[1]].forEach((input) => {
-      input.classList.remove("disabled");
       input.value = "";
     });
     formInputs[2].value = "criminal";
     formInputs[3].value = 1;
+    clearStyles();
   }
 };
 
@@ -51,6 +51,7 @@ const deleteBook = (item) => {
 };
 
 const openModal = (e) => {
+  clearStyles();
   const itemData = state.filter(
     (item) => item.id === parseInt(e.dataset.id)
   )[0];
@@ -146,7 +147,7 @@ const addCategory = (e) => {
       newOption.innerHTML = inputNewCategory.value;
       select.appendChild(newOption);
     });
-    inputNewCategory.classList.remove("disabled");
+    clearStyles();
     addedCategories.push(inputNewCategory.value);
     localStorage.setItem("categories", JSON.stringify(addedCategories));
   } else inputNewCategory.classList.add("disabled");
@@ -239,6 +240,16 @@ const onDrop = (event) => {
   renderBooks(modyfiedState);
 };
 
+const clearStyles = () => {
+  [modalInputs[0], modalInputs[1]].forEach((input) =>
+    input.classList.remove("disabled")
+  );
+  [formInputs[0], formInputs[1]].forEach((input) =>
+    input.classList.remove("disabled")
+  );
+  inputNewCategory.classList.remove("disabled");
+};
+
 // INITIAL
 if (!pdfDataDiv) {
   initialAddNewCategories();
@@ -249,10 +260,8 @@ if (!pdfDataDiv) {
   );
   modal.addEventListener("click", (e) => {
     if (e.target.dataset.layer) {
-      [modalInputs[0], modalInputs[1]].forEach((input) =>
-        input.classList.remove("disabled")
-      );
       modal.classList.remove("open");
+      clearStyles();
     }
   });
 } else pdfExport();

@@ -127,6 +127,7 @@ h1 {
 }
 .table__headers *,
 .table__item * {
+  padding-top: 0.3em;
   flex: 1 1 22%;
 }
 .table__item * {
@@ -142,10 +143,20 @@ h1 {
 }
 .blank__header,
 .button__table {
+  padding-top: 0em;
+  margin-top: 0.3em;
   flex: 1 1 6%;
 }
 
 /* MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW MODAL WINDOW  */
+.modal {
+  visibility: hidden;
+  background-color: hsl(0, 0%, 83%, 0.5);
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+}
 .modal__container {
   padding: 2em;
   background-color: #f5aa7ed5;
@@ -157,19 +168,11 @@ h1 {
 }
 .form__modal {
   margin: auto;
-  width: 40%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   gap: 1em;
-}
-.modal {
-  visibility: hidden;
-  background-color: hsl(0, 0%, 83%, 0.5);
-  position: fixed;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
 }
 
 /* HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS HELPERS  */
