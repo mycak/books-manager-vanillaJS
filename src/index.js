@@ -124,13 +124,17 @@ const renderBooks = (stateToRender) => {
         ondrop="onDrop(event);"
         data-id=${book.id}
       >
-        <p>${book.title}</p>
-        <p>${book.author}</p>
+        <p>${book.title.charAt(0).toUpperCase() + book.title.slice(1)}</p>
+        <p>${book.author
+          .toLowerCase()
+          .split(" ")
+          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(" ")}</p>
         <p>${book.category}</p>
         <p>${`⭐`.repeat(book.priority)}</p>
         <button class="button button__delete button__table" type="button" data-id=${
           book.id
-        } onClick="deleteBook(this)"}>-</button>
+        } onClick="deleteBook(this)"}>x</button>
         <button class="button button__edit button__table" type="button" data-id=${
           book.id
         } onClick="openModal(this)"}>Edit</button>
@@ -252,6 +256,11 @@ const clearStyles = () => {
     input.classList.remove("disabled")
   );
   inputNewCategory.classList.remove("disabled");
+};
+
+const clearFilters = () => {
+  filterInputs.forEach((input) => (input.value = 0));
+  renderBooks(state);
 };
 
 // INITIAL
