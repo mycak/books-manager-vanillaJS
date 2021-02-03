@@ -1,56 +1,44 @@
 let state = JSON.parse(localStorage.getItem("state")) || [];
 let addedCategories = JSON.parse(localStorage.getItem("categories")) || [];
-let modyfiedState = [];
+let modyfiedState = JSON.parse(localStorage.getItem("modyfiedState")) || [];
 let flag = true;
 
-//Modals selector
-const modal = document.querySelector(".modal");
-const modalTitleInput = document.getElementById("modal-title");
-const modalCategoryInput = document.getElementById("modal-category");
-const modalPriorityInput = document.getElementById("modal-priority");
-const modalAuthorInput = document.getElementById("modal-author");
-const modalEditButton = document.querySelector(".button__edit");
-
 const form = document.querySelector("form");
-const formTitleInput = document.querySelector(".form__title");
-const formCategoryInput = document.getElementById("category");
-const formPriorityInput = document.getElementById("priority");
-const formAuthorInput = document.getElementById("author");
-
+const formInputs = document.querySelectorAll(".form__input");
 const filterInputs = document.querySelectorAll(".filter__input");
-
 const inputNewCategory = document.querySelector(".input__new__category");
 const selectsCategory = document.querySelectorAll(".select__category");
-
 const table = document.querySelector(".table__data");
-
 const totalParagraph = document.querySelector(".total");
 const totalCategoryParagraph = document.querySelector(".total__category");
+const modal = document.querySelector(".modal");
+const modalInputs = document.querySelectorAll(".modal__input");
+const modalEditButton = document.querySelector(".button__edit");
+const pdfDataDiv = document.querySelector(".pdfData");
 
 // MANAGING STATE
-
 const addBook = (e) => {
   const newId = state.length ? state[state.length - 1].id + 1 : 0;
   e.preventDefault();
-  const newBook = {
-    title: formTitleInput.value,
-    category: formCategoryInput.value,
-    priority: formPriorityInput.value,
-    author: formAuthorInput.value,
-    id: newId,
-  };
-  if (newBook.title === "" || newBook.author === "") {
-    newBook.title === "" ? formTitleInput.classList.add("disabled") : null;
-    newBook.author === "" ? formAuthorInput.classList.add("disabled") : null;
+  let newBook = {};
+  ["title", "author", "category", "priority"].forEach((item, i) => {
+    newBook = { ...newBook, [item]: formInputs[i].value };
+  });
+  newBook = { ...newBook, id: newId };
+
+  if (formInputs[0].value === "" || formInputs[1].value === "") {
+    [formInputs[0], formInputs[1]].forEach((input) => {
+      input.value === "" ? input.classList.add("disabled") : null;
+    });
   } else {
     state.push(newBook);
     filterBooks(modyfiedState);
-    formTitleInput.classList.remove("disabled");
-    formAuthorInput.classList.remove("disabled");
-    formTitleInput.value = "";
-    formAuthorInput.value = "";
-    formCategoryInput.value = "criminal";
-    formPriorityInput.value = 1;
+    [formInputs[0], formInputs[1]].forEach((input) => {
+      input.classList.remove("disabled");
+      input.value = "";
+    });
+    formInputs[2].value = "criminal";
+    formInputs[3].value = 1;
   }
 };
 
@@ -67,28 +55,24 @@ const openModal = (e) => {
     (item) => item.id === parseInt(e.dataset.id)
   )[0];
   modal.classList.add("open");
-  modalTitleInput.value = itemData.title;
-  modalCategoryInput.value = itemData.category;
-  modalPriorityInput.value = itemData.priority;
-  modalAuthorInput.value = itemData.author;
+  ["title", "author", "category", "priority"].forEach((item, i) => {
+    modalInputs[i].value = itemData[item];
+  });
   modalEditButton.dataset.currentId = itemData.id;
 };
 
 const editBook = (e) => {
   const currentId = parseInt(e.dataset.currentId);
   const indexInState = state.map((item) => item.id).indexOf(currentId);
-  if (modalTitleInput.value === "" || modalAuthorInput.value === "") {
-    modalTitleInput.value === ""
-      ? modalTitleInput.classList.add("disabled")
-      : null;
-    modalAuthorInput.value === ""
-      ? modalAuthorInput.classList.add("disabled")
-      : null;
+
+  if (modalInputs[0].value === "" || modalInputs[1].value === "") {
+    [modalInputs[0], modalInputs[1]].forEach((input) => {
+      input.value === "" ? input.classList.add("disabled") : null;
+    });
   } else {
-    state[indexInState].title = modalTitleInput.value;
-    state[indexInState].category = modalCategoryInput.value;
-    state[indexInState].priority = modalPriorityInput.value;
-    state[indexInState].author = modalAuthorInput.value;
+    ["title", "author", "category", "priority"].forEach((item, i) => {
+      state[indexInState][item] = modalInputs[i].value;
+    });
     filterBooks(modyfiedState);
     modal.classList.remove("open");
   }
@@ -107,6 +91,7 @@ const sortBooks = (kind) => {
     } else modyfiedState.sort((a, b) => helper(a, b)).reverse();
   }
   flag = !flag;
+  console.log(modyfiedState);
   renderBooks(modyfiedState);
 };
 
@@ -126,6 +111,7 @@ const filterBooks = (e) => {
 // RENDER
 const renderBooks = (stateToRender) => {
   localStorage.setItem("state", JSON.stringify(state));
+  localStorage.setItem("modyfiedState", JSON.stringify(modyfiedState));
   table.innerHTML = ``;
   table.innerHTML = stateToRender
     .map(
@@ -141,8 +127,8 @@ const renderBooks = (stateToRender) => {
         <p>${book.author}</p>
         <p>${book.category}</p>
         <p>${book.priority}</p>
-        <button type="button" data-id=${book.id} onClick="deleteBook(this)"}>Delete</button>
-        <button type="button" data-id=${book.id} onClick="openModal(this)"}>Edit</button>
+        <button class="button button__delete button__table" type="button" data-id=${book.id} onClick="deleteBook(this)"}>-</button>
+        <button class="button button__edit button__table" type="button" data-id=${book.id} onClick="openModal(this)"}>Edit</button>
       </div>
   `
     )
@@ -151,7 +137,6 @@ const renderBooks = (stateToRender) => {
 };
 
 // ADDING CATEGORY
-
 const addCategory = (e) => {
   e.preventDefault();
   if (inputNewCategory.value !== "") {
@@ -180,7 +165,6 @@ const initialAddNewCategories = () => {
 };
 
 //COUNTING RECORDS
-
 const countTotalRecords = (state) => {
   totalParagraph.innerHTML = `Total records ${state.length}`;
 };
@@ -190,8 +174,23 @@ const countCategoryRecords = (newState) => {
   } else totalCategoryParagraph.innerHTML = "";
 };
 
-//CSV EXPORT
-
+// EXPORT TO FILE
+const pdfExport = () => {
+  table.innerHTML = modyfiedState
+    .map(
+      (book) => `
+    <div class="pdf__item">
+      <p>${book.title}</p>
+      <p>${book.author}</p>
+      <p>${book.category}</p>
+      <p>${book.priority}</p>
+    </div>
+`
+    )
+    .join("");
+  window.print();
+  setTimeout(() => window.location.assign("/"), 1000);
+};
 const csvExport = () => {
   const rows = document.querySelectorAll(".table__item");
   const rowsdata = Array.from(rows).map((row) => {
@@ -209,12 +208,10 @@ const csvExport = () => {
   link.setAttribute("href", encodedUri);
   link.setAttribute("download", "books.csv");
   document.body.appendChild(link);
-
   link.click();
 };
 
 // DRAG AND DROP
-
 const onDragStart = (event) => {
   event.dataTransfer.setData("text/plain", event.target.dataset.id);
 };
@@ -243,18 +240,19 @@ const onDrop = (event) => {
 };
 
 // INITIAL
-
-initialAddNewCategories();
-filterBooks();
-
-// EVENT LISTENERS
-
-form.addEventListener("submit", addBook);
-filterInputs.forEach((input) => input.addEventListener("change", filterBooks));
-modal.addEventListener("click", (e) => {
-  if (e.target.dataset.layer) {
-    modalTitleInput.classList.remove("disabled");
-    modalAuthorInput.classList.remove("disabled");
-    modal.classList.remove("open");
-  }
-});
+if (!pdfDataDiv) {
+  initialAddNewCategories();
+  filterBooks();
+  form.addEventListener("submit", addBook);
+  filterInputs.forEach((input) =>
+    input.addEventListener("change", filterBooks)
+  );
+  modal.addEventListener("click", (e) => {
+    if (e.target.dataset.layer) {
+      [modalInputs[0], modalInputs[1]].forEach((input) =>
+        input.classList.remove("disabled")
+      );
+      modal.classList.remove("open");
+    }
+  });
+} else pdfExport();

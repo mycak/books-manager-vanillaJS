@@ -7,7 +7,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap"
         rel="stylesheet"
       />
-      <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css">
   </head>
   <body>
     <section class="section">
@@ -16,16 +16,16 @@
 
       <form class="form">
         <div>
-          <label for="title">Title</label>
-          <input type="text" name="title" id="title" class="form__title" placeholder="Pass the title !"/>
+          <label class="form__label" for="title">Title</label>
+          <input type="text" name="title" class="form__input form__title" placeholder="Pass the title !"/>
         </div>
         <div>
-          <label for="author">Author</label>
-          <input type="text" name="author" id="author" class="form__author" placeholder="Pass the author !"/>
+          <label class="form__label" for="author">Author</label>
+          <input type="text" name="author" class="form__input form__author" placeholder="Pass the author !"/>
         </div>
         <div>
-          <label for="category">Category</label>
-          <select name="category" id="category" class="select__category">
+          <label class="form__label" for="category">Category</label>
+          <select name="category" class="form__input select__category">
             <option value="criminal">Criminal</option>
             <option value="scifi">Sci-fi</option>
             <option value="fantasy">Fantasy</option>
@@ -34,8 +34,8 @@
           </select>
         </div>
         <div>
-          <label for="priority">Priority</label>
-          <select name="priority" id="priority">
+          <label class="form__label" for="priority">Priority</label>
+          <select name="priority" class="form__input">
             <option value=1>1</option>
             <option value=2>2</option>
             <option value=3>3</option>
@@ -43,45 +43,54 @@
             <option value=5>5</option>
           </select>
         </div>
-        <button type="submit" class="button__add">Add Book</button>
+        <button type="submit" class="button">Add</button>
       </form>
 
-      <div class="filter">
-        <p>Filters</p>
-        <label for="category">Category</label>
-        <select name="category" id="filter-category" data-kind="category" class="select__category filter__input">
-          <option value="0">All</option>
-          <option value="criminal">Criminal</option>
-          <option value="scifi">Sci-fi</option>
-          <option value="fantasy">Fantasy</option>
-          <option value="drama">Drama</option>
-          <option value="science">Science</option>
-        </select>
-        <label for="priority">Priority</label>
-        <select name="priority" id="filter-priority" data-kind="priority" class="filter__input">
-          <option value=0>All</option>
-          <option value=1>1</option>
-          <option value=2>2</option>
-          <option value=3>3</option>
-          <option value=4>4</option>
-          <option value=5>5</option>
-        </select>
+      <div class="filterAndCategory__modul">
+        <div class="filter">
+          <p>Filters</p>
+          <div class="filters__container">
+            <div>
+              <label  class="form__label" for="category">Category</label>
+              <select name="category" data-kind="category" class="select__category filter__input">
+                <option value="0">All</option>
+                <option value="criminal">Criminal</option>
+                <option value="scifi">Sci-fi</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="drama">Drama</option>
+                <option value="science">Science</option>
+              </select>
+            </div>
+            <div>
+              <label  class="form__label" for="priority">Priority</label>
+              <select name="priority" data-kind="priority" class="filter__input">
+                <option value=0>All</option>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+                <option value=5>5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="category">
+          <p>Add Category</p>
+          <form onSubmit="addCategory(event)">
+            <input type="text" name="newCategory" class="input__new__category" placeholder="Pass the category !"/>
+            <button type="submit" class="button">Add</button>
+          </form>
+        </div>
       </div>
-
-      <form class="modul__add__category" onSubmit="addCategory(event)">
-        <label for="newCategory">Add category</label>
-        <input type="text" name="newCategory" class="input__new__category" placeholder="Pass the category !"/>
-        <button type="submit" class="button__add__category">Add</button>
-      </form>
 
       <div class="table">
         <div class="table__headers">
-          <button type="button" onclick="sortBooks('title')">Title</button>
-          <button type="button" onclick="sortBooks('author')">Author</button>
-          <button type="button" onclick="sortBooks('category')">Category</button>
-          <button type="button" onclick="sortBooks('priority')">Priority</button>
-          <p></p>
-          <p></p>
+          <button class ="button button__sort" type="button" onclick="sortBooks('title')">Title</button>
+          <button class ="button button__sort" type="button" onclick="sortBooks('author')">Author</button>
+          <button class ="button button__sort" type="button" onclick="sortBooks('category')">Category</button>
+          <button class ="button button__sort" type="button" onclick="sortBooks('priority')">Priority</button>
+          <div class="blank__header"> </div>
+          <div class="blank__header"> </div>
         </div>
         <div class="table__data drop__zone" ondragover="onDragOver(event);"></div>
       </div>
@@ -93,16 +102,16 @@
         <div class="modal__container">
           <form class="form__modal">
             <div>
-              <label for="title">Title</label>
-              <input type="text" name="title" id="modal-title" class="form__title" placeholder="Pass the title !"/>
+              <label  class="form__label" for="title">Title</label>
+              <input type="text" name="title" class="modal__input form__title" placeholder="Pass the title !"/>
             </div>
             <div>
-              <label for="author">Author</label>
-              <input type="text" name="author" id="modal-author" class="form__author" placeholder="Pass the author !"/>
+              <label  class="form__label" for="author">Author</label>
+              <input type="text" name="author" class="modal__input form__author" placeholder="Pass the author !"/>
             </div>
             <div>
-              <label for="category">Category</label>
-              <select name="category" id="modal-category" class="select__category">
+              <label  class="form__label" for="category">Category</label>
+              <select name="category" class="modal__input select__category">
                 <option value="criminal">Criminal</option>
                 <option value="scifi">Sci-fi</option>
                 <option value="fantasy">Fantasy</option>
@@ -111,8 +120,8 @@
               </select>
             </div>
             <div>
-              <label for="priority">Priority</label>
-              <select name="priority" id="modal-priority">
+              <label  class="form__label" for="priority">Priority</label>
+              <select name="priority" class="modal__input">
                 <option value=1>1</option>
                 <option value=2>2</option>
                 <option value=3>3</option>
@@ -120,11 +129,14 @@
                 <option value=5>5</option>
               </select>
             </div>
-            <button type="button" data-currentId="" class="button__edit" onClick="editBook(this)">Save</button>
+            <button type="button" data-currentId="" class="button button__edit" onClick="editBook(this)">Save</button>
           </form>
         </div>
       </div>
-      <button type="button" onclick="csvExport()">Export to CSV</button>
+      <div class="buttons__export">
+        <button class="button button__export" type="button" onclick="csvExport()">Export to CSV</button>
+        <a class="button button__export button__exportPDF" href='/src/pdf.html'>Export to PDF</a>
+      </div>
     </section>
     <script src="./src/index.js"></script>
   </body>
