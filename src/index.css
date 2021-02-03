@@ -23,7 +23,7 @@ a {
 h1 {
   max-width: 50%;
   font-size: 3em;
-  margin: 1em auto 2em auto;
+  margin: 1em auto 1em auto;
   background-color: #ffc600;
   transform: rotate(2deg);
 }
@@ -101,6 +101,7 @@ h1 {
 .filterAndCategory__modul {
   margin-top: 2em;
   display: flex;
+  width: 100%;
 }
 .filterAndCategory__modul > div {
   flex-basis: 100%;
@@ -111,6 +112,7 @@ h1 {
   width: 20%;
   margin: 1em auto 1em auto;
   transform: rotate(-1deg);
+  background-color: #f5aa7e;
 }
 .category p {
   width: 50%;
@@ -123,7 +125,7 @@ h1 {
 /* TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE TABLE  */
 .table {
   width: 80%;
-  margin: 2em auto 2em auto;
+  margin: 4em auto 2em auto;
 }
 .table__headers {
   font-weight: 700;
@@ -229,11 +231,33 @@ h1 {
     width: 95%;
   }
 }
+@media (max-width: 700px) {
+  h1 {
+    max-width: 80%;
+  }
+  .button__edit {
+    padding: 0 5px 0 5px;
+  }
+}
 @media (max-width: 600px) {
+  h1 {
+    font-size: 2em;
+  }
   html {
     font-size: 11px;
   }
+  input {
+    max-width: 70px;
+  }
   .table {
-    width: 100%;
+    width: 95%;
+  }
+}
+@media (max-width: 600px) {
+  p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 160px;
+    white-space: nowrap;
   }
 }
