@@ -70,25 +70,22 @@ h1 {
 }
 .form div:nth-of-type(odd) label,
 .filters__container div:nth-of-type(odd) label {
-  background-color: #f5db7ed5;
+  background-color: #ffc600;
 }
 .form div:nth-of-type(even) label,
 .filters__container div:nth-of-type(even) label {
-  background-color: #f5aa7ed5;
+  background-color: #f5aa7e;
 }
 .button {
   padding: 0 0.5em 0 0.5em;
   min-height: 100%;
   font-size: 1.2em;
   border: solid 1px rgb(0, 0, 0, 0.3);
-  background-color: #f5db7ed5;
+  background-color: #ffc600;
   transform: rotate(-4deg);
   cursor: pointer;
 }
-.button:hover {
-  transition: all 0.2s;
-  transform: scale(1.03);
-}
+
 .button__sort:nth-of-type(odd) {
   transform: rotate(2deg);
 }
@@ -98,7 +95,7 @@ h1 {
 .button__delete,
 .button__exportPDF {
   transform: rotate(-1deg);
-  background-color: #f5aa7ed5;
+  background-color: #f5aa7e;
 }
 /* FILTERS AND CATEGORY MODUL FILTERS AND CATEGORY MODUL FILTERS AND CATEGORY MODUL*/
 .filterAndCategory__modul {
@@ -113,7 +110,6 @@ h1 {
   font-size: 1.4em;
   width: 20%;
   margin: 1em auto 1em auto;
-  background-color: #ffc600;
   transform: rotate(-1deg);
 }
 .category p {
@@ -172,7 +168,7 @@ h1 {
 }
 .modal__container {
   padding: 2em;
-  background-color: #f5aa7ed5;
+  background-color: #f5aa7e;
   position: relative;
   width: 50%;
   top: 50%;
@@ -210,6 +206,10 @@ h1 {
 }
 .pdf__item * {
   flex-basis: 100%;
+}
+.button:hover {
+  transition: all 0.2s;
+  transform: scale(1.03);
 }
 
 @media (max-width: 1024px) {
