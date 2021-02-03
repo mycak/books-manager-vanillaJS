@@ -127,9 +127,13 @@ const renderBooks = (stateToRender) => {
         <p>${book.title}</p>
         <p>${book.author}</p>
         <p>${book.category}</p>
-        <p>${book.priority}</p>
-        <button class="button button__delete button__table" type="button" data-id=${book.id} onClick="deleteBook(this)"}>-</button>
-        <button class="button button__edit button__table" type="button" data-id=${book.id} onClick="openModal(this)"}>Edit</button>
+        <p>${`⭐`.repeat(book.priority)}</p>
+        <button class="button button__delete button__table" type="button" data-id=${
+          book.id
+        } onClick="deleteBook(this)"}>-</button>
+        <button class="button button__edit button__table" type="button" data-id=${
+          book.id
+        } onClick="openModal(this)"}>Edit</button>
       </div>
   `
     )
